@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>博文</title>
+    <!-- 组件ID="HTMLbook"的外链css -->
+    <link rel="stylesheet" href="./css/HTMLbook.css">
     <style>
     @charset "utf-8";
     .book{
         float:left;
-        margin: 0px;
+        margin: 0px 30px 0px 30px;
         
         /*用来调试的bgI*/
         background-size:100%;
@@ -381,10 +383,21 @@
             </div>
         </div>
     </div>
+    <div id="HTMLbook" class="book">
+        <!-- 书合上时的左页面利用 -->
+        <div class="title">
+            HTML标签
+        </div>
+        
+    </div>
     <script>
         var book=document.querySelector('.book');
 		book.addEventListener('click',function(){
 			window.location.href='./blogitem.html';
+		});
+        var HTMLbook=document.querySelector('#HTMLbook');
+		HTMLbook.addEventListener('click',function(){
+			window.location.href='./HTMLbook.html';
 		});
     </script>
 </body>
