@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博文详情</title>
+    <style>
+    @charset "utf-8";
+    html,body{
+        width: 100%;
+        height: 100%;
+    }
+    body{
+        position:relative;
+        margin: 0;
+    }
+    #Cwrap{
+        /*清行内元素的行间距*/
+        display: block;
+        background: antiquewhite;
+    }
+    #layout{
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin-left:-420px;
+        margin-top:-296px;
+        
+        transform-style: preserve-3d;
+        transform: rotateX(0deg) rotateY(0deg);
+        
+        overflow:hidden;
+        
+        background:rgba(0,0,0,1);
+        width:840px;
+        height:594px;
+    }
+
+    #book{
+        position:relative;
+        
+        
+        transform-style:preserve-3d;
+        transform: rotateX(0deg) rotateY(0deg);
+        
+        
+        width:840px;
+        height:594px;
+        
+    }
+    .BackSide{
+        position:absolute;
+        left:150px;
+        transform-style:preserve-3d;
+        transform:rotateY(90deg);
+
+
+        background:rgba(255,0,0,1);
+        width:120px;
+        height:594px;
+        
+    }
+    .TopSide{
+        position:absolute;
+        left:210px;
+        top:-60px;
+        transform-style:preserve-3d;
+        transform:rotateX(90deg);
+        
+        background:rgba(255,0,0,1);
+        width:420px;
+        height:120px;
+    }
+    .BottomSide{
+        position:absolute;
+        left:210px;
+        bottom:-60px;
+        transform-style:preserve-3d;
+        
+        background:rgba(255,0,0,1);
+        width:420px;
+        height:120px;
+    }
+    .FrontSide{
+        position:absolute;
+        right:150px;
+        transform-style:preserve-3d;
+        transform:rotateY(90deg);
+
+
+        background:rgba(255,0,0,1);
+        width:120px;
+        height:594px;	
+    }
+    .RightSide{
+        position:absolute;
+        right:210px;
+        transform-style:preserve-3d;
+        transform-origin:left;
+        transform:translateZ(-30px);
+        
+        width:420px;
+        height:594px;
+
+    }
+
+    #LeftSide{
+        position:absolute;
+        right:210px;
+        transform-style:preserve-3d;
+        transform-origin:left;
+        transform:translateZ(30px)rotateY(0deg);
+        
+        width:420px;
+        height:594px;
+
+    }
+
+    #Page1{
+
+        transform-style:preserve-3d;
+        transform:translateZ(30px);
+        
+        width:100%;
+        height:100%;
+    }
+    #Page2{
+        position:absolute;
+        left:0px;
+        top:0px;
+        
+        transform-style:preserve-3d;
+        transform:translateZ(29px)scale(-1,1);
+        
+        
+        background:url(./img/T1.jpg);
+        width:100%;
+        height:100%;
+    }
+    #Page_3{
+        transform-origin:left;
+    }
+    #page_5{
+        transform-origin:left;
+    }
+    #page_7{
+        transform-origin:left;
+    }
+    #Page33{
+        position:absolute;
+        left:0px;
+        top:0px;
+        
+        transform-style:preserve-3d;
+        transform:translateZ(-29px);
+        
+        
+        background:url(./img/T2.jpg);
+        width:100%;
+        height:100%;
+    }
+    #Page34{
+        position:absolute;
+        left:0px;
+        top:0px;
+        
+        transform-style:preserve-3d;
+        transform:translateZ(-30px);
+        
+        
+        background:url(./img/T5.jpg);
+        width:100%;
+        height:100%;
+    }        
+    </style>
+</head>
+<body>
+    <!--svg不好居中问题，套div-->
+    <div id="layout">
+        <div id="book">
+            <div class="BackSide">
+                
+            </div>
+            <div class="FrontSide">
+                
+            </div>
+            
+            
+            <div class="TopSide">
+                
+            </div>
+            <div class="BottomSide">
+                
+            </div>			
+            <!--在LeftSide后会出现margin-left:210px造成相对于父元素移动了420px
+                1：解决所以把出现margin错误的这个（2D同一+X，+Y轴）放在了前面，在LeftSide后的TopSide和BottomSide没测试，
+                2：把LeftSide后面的.left .right .left>.prev等脱离文本流；没测试不知道行不行
+            -->
+            
+            <div class="RightSide">
+                <div id="Page33">
+                </div>
+                <div id="Page34">
+                </div>
+            </div>	
+            
+            <div id="LeftSide">
+                <div id="Page1">
+                    
+                </div>
+                <div id="Page2">
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script>
+    (function(){	
+        var oBook=document.getElementById('book');
+        var oLeftSide=document.getElementById('LeftSide');
+        var oPage1=document.getElementById('Page1');
+        var oPage2=document.getElementById('Page2');
+        
+        oLeftSide.addEventListener('click',function(){
+    //		oLeftSide.style.background='rgba(0,0,255,1)';
+            oBook.style.transform='rotateY('+0+'deg)translateX(210px)';
+            oLeftSide.style.transform='rotateY('+-180+'deg)translateZ(29px)';
+            
+        });
+
+        //动态创建div3,4
+        var div=document.createElement('div');
+        div.setAttribute('id','Page_3');
+    //	div.setAttribute('width','420px');
+    //	div.setAttribute('height','594px');
+    //以上注释的是错误写法
+        div.style.width='420px';
+        div.style.height='594px';
+        //布局
+        div.style.position='absolute';
+        div.style.right='210px';
+    //	div.style.transform-origin=left;
+        oBook.appendChild(div);
+        
+        var div_page3=document.createElement('div');
+        div_page3.style.transform='translateZ(28px)';
+        div_page3.setAttribute('id','page3');
+        div_page3.style.background='url(./img/T2.jpg)';
+        div_page3.style.width='100%';
+        div_page3.style.height='100%';
+        div.appendChild(div_page3);
+        
+        var div_page4=document.createElement('div');
+        //布局
+        div_page4.style.position='absolute';
+        div_page4.style.right='0';
+        div_page4.style.top='0';
+        div_page4.style.transform='translateZ(27px)scale(-1,1)';
+        
+        div_page4.setAttribute('id','page4');
+        div_page4.style.background='url(./img/T5.jpg)';
+        div_page4.style.width='100%';
+        div_page4.style.height='100%';
+        div.appendChild(div_page4);
+        
+        //翻页
+        div.addEventListener('click',function(){
+            div.style.transform='rotateY('+-180+'deg)';
+        });
+        
+        //动态创建div5,6
+        var page_5=document.createElement('div');
+        page_5.setAttribute('id','page_5');
+        page_5.style.width='420px';
+        page_5.style.height='594px';
+        //布局
+        page_5.style.position='absolute';
+        page_5.style.right='210px';
+    //	page_5.style.transform-origin=left;
+        oBook.appendChild(page_5);
+        
+        var div_page5=document.createElement('div');
+        div_page5.style.transform='translateZ(26px)';
+        div_page5.setAttribute('id','page5');
+        div_page5.style.background='url(./img/T6.jpg)';
+        div_page5.style.width='100%';
+        div_page5.style.height='100%';
+        page_5.appendChild(div_page5);
+        
+        var div_page6=document.createElement('div');
+        //布局
+        div_page6.style.position='absolute';
+        div_page6.style.right='0';
+        div_page6.style.top='0';
+        div_page6.style.transform='translateZ(25px)scale(-1,1)';
+        
+        div_page6.setAttribute('id','page6');
+        div_page6.style.background='url(./img/T3.jpg)';
+        div_page6.style.width='100%';
+        div_page6.style.height='100%';
+        page_5.appendChild(div_page6);
+        
+        //翻页
+        page_5.addEventListener('click',function(){
+            page_5.style.transform='rotateY('+-180+'deg)';
+        });
+        
+        
+        //动态创建div7,8
+        var page_7=document.createElement('div');
+        page_7.setAttribute('id','page_7');
+        page_7.style.width='420px';
+        page_7.style.height='594px';
+        page_7.style.position='absolute';
+        page_7.style.right='210px';
+        oBook.appendChild(page_7);
+        
+        var divpage7=document.createElement('div');
+        divpage7.setAttribute('id','page7');
+        divpage7.style.width='100%';
+        divpage7.style.height='100%';
+        divpage7.style.background='url(./img/T4.jpg)';
+        divpage7.style.transform='translateZ(24px)';
+        page_7.appendChild(divpage7);
+        
+        var divpage8=document.createElement('div');
+        divpage8.setAttribute('id','page8');
+        divpage8.style.width='100%';
+        divpage8.style.height='100%';
+        divpage8.style.background='url(./img/T2.jpg)';
+        divpage8.style.transform='translateZ(23px)';
+        page_7.appendChild(divpage8);
+        
+        page_7.addEventListener('click',function(){
+            page_7.style.transform='rotateY('+-180+'deg)';
+        });
+        
+    })();        
+    </script>    
+</body>
+</html>

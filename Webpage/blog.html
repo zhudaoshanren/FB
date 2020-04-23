@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博文</title>
+    <style>
+    @charset "utf-8";
+    .book{
+        float:left;
+        margin: 0px;
+        
+        /*用来调试的bgI*/
+        background-size:100%;
+        background-image:url('./img/test0.jpg');
+        
+        width: 420px;
+        height: 297px;	
+        
+        
+        /*让子元素脱离文本流，子绝父相*/
+        position: relative;
+        
+        /*3d测试*/
+        
+        
+        /*perspective: 180px;*/
+        
+        transform-style: preserve-3d;
+        transform: rotateX(0deg) rotateY(0deg);
+        
+
+    }
+
+    /*.TopSide,.BottomSide,.LeftSide,.RightSide,.FrontSide,.BackSide{
+        
+        margin: 0;
+        padding: 0;
+        
+        position: absolute;
+        
+        transform-style:preserve-3d;
+    }*/
+
+
+    .BackSide{
+        
+        /*模仿贴图*/
+        background-size:100%;
+        background-image:url('./img/test0.jpg');
+        
+        
+        
+        margin:0px;
+        padding:0px;
+        width: 60px;
+        height: 297px;
+        
+        
+        /*2D布局脱离文本流*/
+        position: absolute;			
+        /*2D布局在wrap中居中,1: margin-left:父容器width一半减去自身一半;*/
+        margin-left:180px;
+
+        
+        
+        
+        /*开启3D* 注意：开启3D模型时，1要脱离文本流让div重合在一起*/
+        
+        transform-style:preserve-3d;
+        
+        /*3D布局变成后面*/
+        transform:rotateY(90deg);
+    }
+
+    .FrontSide{
+        /*模仿贴图*/
+        background-size:100%;
+        background-image:url('./img/D.jpg');	
+        
+        margin: 0px;
+        padding: 0px;
+        width: 60px;
+        height: 297px;
+        
+        /*2D布局脱离文本流*/
+        position: absolute;
+        right: 0;
+        top: 0;
+        
+        
+        /*2D布局在wrap中的最末尾,1: margin-left:父容器width一半减去自身一半;这里就是margin-left:417px;                   
+        *                   2：2D转成3D布局用translateX(x),不可因为设置rotate后坐标轴变了
+        * */
+        margin-left:380px;
+        
+        
+        
+        transform-style: preserve-3d;
+        /*3D布局在wrap中的最末尾*设置transform:rotateY(90deg)后失效;*/			
+        /*transform:translateX(417px);*/
+        
+        /*让2D轴转就是让平面视图width=0 +Z=3px;
+        让3D轴转成+X变成+Z;		*/
+        transform:rotateY(90deg) ;
+        
+    }
+    .LeftSide{
+        /*background-size:100%;*/
+        background-image:url('./img/test0.jpg');
+        background-repeat: no-repeat;
+        
+        margin: 0px;
+        padding: 0px;
+        width: 210px;
+        height: 297px;
+        
+        position: absolute;
+        margin-left:210px;
+        
+
+        
+        transform-style: preserve-3d;
+        transform-origin: left;
+        transform: translateZ(30px) rotateY(0deg);
+        
+    }
+
+
+    .LeftSide>.Lprev{
+        
+        /*background-size:100%;*/
+        background-image:url('./img/test0.jpg');
+        background-position: right top;			
+        background-repeat: no-repeat;
+                    
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        
+        position: absolute;
+        left: 0;
+        top: 0;
+        
+    }
+
+    .on{
+        transform-origin: left;
+        transform: rotateY(0deg);
+    }
+
+    .LeftSide>.Lnext{
+        
+        /*background-size:100%;*/
+        background-image:url('./img/test1.jpg');	
+        background-repeat: no-repeat;
+
+                        
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        
+        transform:translateZ(-1px) scale(-1,1);
+    }
+    .Page1{
+        background-image:url('./img/test1.jpg');
+        background-position: right top; 
+        width: 50%;
+        height: 100%;
+        
+        position: absolute;
+        right: 0;
+        top: 0;
+        
+        transform-style: preserve-3d;
+        transform-origin: left;
+        transform: translateZ(28px) rotateY(0deg);			
+        
+    }
+    .Page1>.Page1prev{
+        background-image:url('./img/test1.jpg');
+        background-position: right top;			
+        background-repeat: no-repeat;
+                    
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        
+        position: absolute;
+        left: 0;
+        top: 0;	
+        
+                
+    }
+    .Page1>.Page1next{
+        background-image:url('./img/test2.jpg');
+        background-position: left top;			
+        background-repeat: no-repeat;
+                    
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        
+        position: absolute;
+        left: 0;
+        top: 0;	
+        
+        /*在父容器上进行+Z轴的移动*/
+        transform:translateZ(-1px) scale(-1,1);			
+    }
+
+
+    .Page2{
+        background-image:url('./img/test2.jpg');
+        background-position: right top; 
+        width: 50%;
+        height: 100%;
+        
+        position: absolute;
+        right: 0;
+        top: 0;
+        
+        transform-style: preserve-3d;
+        transform-origin: left;
+        transform: translateZ(27px) rotateY(0deg);			
+        
+    }
+    .Page2>.Page2prev{
+        background-image:url('./img/test2.jpg');
+        background-position: right top;			
+        background-repeat: no-repeat;
+                    
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        
+        position: absolute;
+        left: 0;
+        top: 0;	
+        
+                
+    }
+    .Page2>.Page2next{
+        z-index: 99;
+        background-image:url('./img/test3.jpg');
+        background-position: left top;			
+        background-repeat: no-repeat;
+                    
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        
+        position: absolute;
+        left: 0;
+        top: 0;	
+        
+        /*在父容器上进行+Z轴的移动*/
+        transform:translateZ(-1px) scale(-1,1);			
+    }		
+
+
+
+
+
+
+
+
+
+
+            
+
+
+    .RightSide{
+        background-size:100%;
+        background-image:url('../img/BOOK/B.jpg');	
+        
+        margin: 0px;
+        padding: 0px;
+        width: 210px;
+        height: 297px;
+        
+        position: absolute;
+        margin-left:210px;
+        
+        transform-style: preserve-3d;
+        transform: translateZ(-30px);
+        
+    }
+    .TopSide{
+        background-size:100%;
+        background-image:url('../img/BOOK/E.jpg');
+        margin: 0px;
+        padding: 0px;			
+        width: 210px;
+        height: 60px;
+        
+        position: absolute;
+        margin-left:210px;
+        
+        transform-style: preserve-3d;
+        transform:rotateX(90deg);			
+        
+    }
+    .BottomSide{
+        background-size:100%;
+        background-image:url('../img/BOOK/E.jpg');
+        margin: 0px;
+        padding: 0px;			
+        width: 210px;
+        height: 60px;
+        
+        position: absolute;
+        margin-left:210px;
+        margin-top:267px;
+        
+        transform-style: preserve-3d;
+        transform:rotateX(90deg);			
+    }        
+    </style>
+</head>
+<body>
+    <div class="book">
+        <div class="BackSide">
+            
+        </div>
+        <div class="FrontSide">
+            
+        </div>
+        
+        
+        <div class="TopSide">
+            
+        </div>
+        <div class="BottomSide">
+            
+        </div>			
+        
+        <div class="RightSide">
+            <div class="Rprev">
+                
+            </div>
+            <div class="Rnext">
+                
+            </div>
+        </div>	
+        
+        <div class="LeftSide">
+            <div class="Lprev">
+                
+            </div>
+            <div class="Lnext">
+                
+            </div>
+        </div>
+        
+        
+        <div class="Page1">
+            <div class="Page1prev">
+                
+            </div>
+            <div class="Page1next">
+                
+            </div>
+        </div>
+        <div class="Page2">
+            <div class="Page2prev">
+                
+            </div>
+            <div class="Page2next">
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        var book=document.querySelector('.book');
+		book.addEventListener('click',function(){
+			window.location.href='./blogitem.html';
+		});
+    </script>
+</body>
+</html>
